@@ -1,0 +1,1 @@
+File di prova per il testing del corretto funzionamento di git su questa directory.
