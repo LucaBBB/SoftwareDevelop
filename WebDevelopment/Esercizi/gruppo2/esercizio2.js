@@ -4,6 +4,13 @@ let stringaPiuLunga = cercaPiuLungaForEach(arrayDiStringhe);
 
 console.log(`La stringa piu' lunga contenuta in ${arrayDiStringhe} e' ${stringaPiuLunga}.`);
 
+
+
+/**
+ * Funzione che cerca qual e' la stringa piu lunga.
+ * @param {Array[string]} arrayDiStringhe array contenente delle stringhe.
+ * @returns la prima stringa trovata piu' lunga.
+ */
 function cercaPiuLunga(arrayDiStringhe) {
     let stringaPiuLunga = "";
 
@@ -16,6 +23,11 @@ function cercaPiuLunga(arrayDiStringhe) {
     return stringaPiuLunga;
 }
 
+/**
+ * Funzione come la precedente, ma piu' efficiente perche' usa .forEach().
+ * @param {Array[string]} arrayDiStringhe array contenente delle stringhe.
+ * @returns la prima stringa trovata piu' lunga.
+ */
 function cercaPiuLungaForEach(arrayDiStringhe) {
     let stringaPiuLunga = "";
 
