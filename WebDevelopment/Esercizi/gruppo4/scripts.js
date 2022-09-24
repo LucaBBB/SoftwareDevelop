@@ -63,7 +63,6 @@ function costruisciTabella() {
  * Funzione chiamata al 'Salva' del modale, aggiunge un nuovo libro (con i dati inseriti nel form) alla tabella.
  */
 function aggiuntaNuovoLibroAllaTabella() {
-
     let libro = {
         titolo: $("#titolo").val(),
         autore: $("#autore").val(),
