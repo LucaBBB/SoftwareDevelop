@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>App Libreria</title>
+    <link rel="icon" type="image/x-icon" href="./images/book.svg">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <script type="module" defer src="./scripts.js"></script>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-dark bg-primary navbar-expand-lg">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <img src="./images/book.svg" alt="TaskManagerIcon" width="30" height="24">
+                    Task Manager
+                </a>
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                </form>
+                <a class="navbar-brand" href="#">
+                    <img src="./images/person.svg" alt="Bootstrap" width="30" height="24">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main style="margin-left: 5%; margin-right: 5%; margin-top: 1%;">
+        <h1>Tabella dei libri</h1>
+        <p>In questa tabella sono presenti tutti i libri da me posseduti.</p>
+        <table class="table table-responsive table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th scope="col">Titolo</th>
+                    <th scope="col">Autore</th>
+                    <th scope="col">ISBN</th>
+                    <th scope="col">Completato</th>
+                </tr>
+            </thead>
+            <tbody id="body-tabella">
+                <!-- JAVASCRIPT COSTRUISCE LA TABELLA CON LA FUNZIONE 'costruisciTabella()' -->
+            </tbody>
+        </table>
+
+
+        <!-- Button trigger modal -->
+        <div style="float: right;">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                data-bs-target="#exampleModal">
+                Nuovo libro
+            </button>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" data-bs-backdrop="static" tabindex="-1"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <!-- HEADER DEL MODALE-->
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Form di aggiunta nuovo libro</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <!-- FINE HEADER DEL MODALE-->
+
+                    <!-- BODY DEL MODALE-->
+                    <div class="modal-body">
+                        <form id="formNuovoLibro">
+                            <div class="mb-3">
+                                <label for="titolo" class="form-label">Titolo</label>
+                                <input type="text" class="form-control" id="titolo" aria-describedby="titoloHelp">
+                            </div>
+                            <div class="mb-3">
+                                <label for="autore" class="form-label">Autore</label>
+                                <input type="text" class="form-control" id="autore" aria-describedby="autoreHelp">
+                            </div>
+                            <div class="mb-3">
+                                <label for="isbn" class="form-label">ISBN</label>
+                                <input type="text" class="form-control" id="isbn" aria-describedby="isbnHelp">
+                            </div>
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="completato">
+                                <label class="form-check-label" for="completato">Completato</label>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- FINE BODY DEL MODALE-->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+                        <button id="salva" type="button" class="btn btn-primary" data-bs-dismiss="modal">Salva libro</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
