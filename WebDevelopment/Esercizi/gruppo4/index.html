@@ -35,7 +35,7 @@
         </nav>
     </header>
 
-    <main>
+    <main style="margin-left: 5%; margin-right: 5%; margin-top: 1%;">
         <h1>Tabella dei libri</h1>
         <p>In questa tabella sono presenti tutti i libri da me posseduti.</p>
         <table class="table table-responsive table-hover">
@@ -44,6 +44,7 @@
                     <th scope="col">Titolo</th>
                     <th scope="col">Autore</th>
                     <th scope="col">ISBN</th>
+                    <th scope="col">Completato</th>
                 </tr>
             </thead>
             <tbody id="body-tabella">
@@ -53,9 +54,12 @@
 
 
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            Nuovo libro
-        </button>
+        <div style="float: right;">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                data-bs-target="#exampleModal">
+                Nuovo libro
+            </button>
+        </div>
 
         <!-- Modal -->
         <div class="modal fade" id="exampleModal" data-bs-backdrop="static" tabindex="-1"
@@ -95,7 +99,8 @@
                     <!-- FINE BODY DEL MODALE-->
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button id="salva" type="button" class="btn btn-primary" data-bs-dismiss="modal">Save changes</button>
+                        <button id="salva" type="button" class="btn btn-primary" data-bs-dismiss="modal">Save
+                            changes</button>
                     </div>
                 </div>
             </div>

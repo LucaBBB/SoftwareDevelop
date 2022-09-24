@@ -21,22 +21,32 @@ function costruisciTabella() {
         {
             titolo: "L'assassinio di Roger Ackroyd",
             autore: "Agatha Christie",
-            isbn: "0192837465"
+            isbn: "0192837465",
+            completato: true
         },
         {
             titolo: "Assassinio sull'Orient Express",
             autore: "Agatha Christie",
-            isbn: "0192837466"
+            isbn: "0192837466",
+            completato: true
+        },
+        {
+            titolo: "Il sentiero dei nidi di ragno",
+            autore: "Italo Calvino",
+            isbn: "0192837467",
+            completato: false
         },
         {
             titolo: "Il visconte dimezzato",
             autore: "Italo Calvino",
-            isbn: "0192837467"
+            isbn: "0192837468",
+            completato: true
         },
         {
             titolo: "Il barone rampante",
             autore: "Italo Calvino",
-            isbn: "0192837468"
+            isbn: "0192837469",
+            completato: true
         }
     ]
 
@@ -54,9 +64,16 @@ function costruisciTabella() {
         let tdIsbn = document.createElement('td');
         tdIsbn.innerHTML = libro.isbn;
 
+        let tdCompletato = document.createElement('td');
+        let checkbox = document.createElement('input');
+        checkbox.setAttribute("type", "checkbox");
+        checkbox.checked = libro.completato;
+        tdCompletato.appendChild(checkbox);
+
         tr.appendChild(tdTitolo);
         tr.appendChild(tdAutore);
         tr.appendChild(tdIsbn);
+        tr.appendChild(tdCompletato);
 
         tbody.appendChild(tr);
     }
