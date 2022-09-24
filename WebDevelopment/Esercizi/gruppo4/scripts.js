@@ -87,6 +87,9 @@ function aggiuntaNuovoLibroAllaTabella() {
     let titolo = $("#titolo").val();
     let autore = $("#autore").val();
     let isbn = $("#isbn").val();
+    let completato = false;
+    if ($("#completato").is(":checked"))
+        completato = true;
 
 
     let tr = document.createElement('tr');
@@ -100,10 +103,16 @@ function aggiuntaNuovoLibroAllaTabella() {
     let tdIsbn = document.createElement('td');
     tdIsbn.innerHTML = isbn;
 
+    let tdCompletato = document.createElement('td');
+    let checkbox = document.createElement('input');
+    checkbox.setAttribute("type", "checkbox");
+    checkbox.checked = completato;
+    tdCompletato.appendChild(checkbox);
 
     tr.appendChild(tdTitolo);
     tr.appendChild(tdAutore);
     tr.appendChild(tdIsbn);
+    tr.appendChild(tdCompletato);
 
     document.getElementById("body-tabella").appendChild(tr);
 }
