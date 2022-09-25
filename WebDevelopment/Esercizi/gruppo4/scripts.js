@@ -53,28 +53,7 @@ function costruisciTabella() {
     let tbody = document.getElementById("body-tabella");
 
     for (let libro of libri) {
-        let tr = document.createElement('tr');
-
-        let tdTitolo = document.createElement('td');
-        tdTitolo.innerHTML = libro.titolo;
-
-        let tdAutore = document.createElement('td');
-        tdAutore.innerHTML = libro.autore;
-
-        let tdIsbn = document.createElement('td');
-        tdIsbn.innerHTML = libro.isbn;
-
-        let tdCompletato = document.createElement('td');
-        let checkbox = document.createElement('input');
-        checkbox.setAttribute("type", "checkbox");
-        checkbox.checked = libro.completato;
-        tdCompletato.appendChild(checkbox);
-
-        tr.appendChild(tdTitolo);
-        tr.appendChild(tdAutore);
-        tr.appendChild(tdIsbn);
-        tr.appendChild(tdCompletato);
-
+        let tr = costruisciRiga(libro);
         tbody.appendChild(tr);
     }
 }
@@ -84,29 +63,49 @@ function costruisciTabella() {
  * Funzione chiamata al 'Salva' del modale, aggiunge un nuovo libro (con i dati inseriti nel form) alla tabella.
  */
 function aggiuntaNuovoLibroAllaTabella() {
+<<<<<<< HEAD
     let titolo = $("#titolo").val();
     let autore = $("#autore").val();
     let isbn = $("#isbn").val();
     let completato = false;
     if ($("#completato").is(":checked"))
         completato = true;
+=======
+    let libro = {
+        titolo: $("#titolo").val(),
+        autore: $("#autore").val(),
+        isbn: $("#isbn").val(),
+        completato: $('#completato').is(":checked")
+    }
+    
+    let tbody = document.getElementById("body-tabella");
+    let tr = costruisciRiga(libro);
+    tbody.appendChild(tr);
+>>>>>>> fbe26a20ec050a7b86f0383ef7586ab20b75b8a0
 
+    pulisciForm("#formNuovoLibro");
+}
 
+function costruisciRiga(libro) {
     let tr = document.createElement('tr');
 
     let tdTitolo = document.createElement('td');
-    tdTitolo.innerHTML = titolo;
+    tdTitolo.innerHTML = libro.titolo;
 
     let tdAutore = document.createElement('td');
-    tdAutore.innerHTML = autore;
+    tdAutore.innerHTML = libro.autore;
 
     let tdIsbn = document.createElement('td');
-    tdIsbn.innerHTML = isbn;
+    tdIsbn.innerHTML = libro.isbn;
 
     let tdCompletato = document.createElement('td');
     let checkbox = document.createElement('input');
     checkbox.setAttribute("type", "checkbox");
+<<<<<<< HEAD
     checkbox.checked = completato;
+=======
+    checkbox.checked = libro.completato;
+>>>>>>> fbe26a20ec050a7b86f0383ef7586ab20b75b8a0
     tdCompletato.appendChild(checkbox);
 
     tr.appendChild(tdTitolo);
@@ -114,5 +113,13 @@ function aggiuntaNuovoLibroAllaTabella() {
     tr.appendChild(tdIsbn);
     tr.appendChild(tdCompletato);
 
-    document.getElementById("body-tabella").appendChild(tr);
+    return tr;
+}
+
+function pulisciForm(idForm) {
+    $(':input', idForm)
+        .not(':button, :submit, :reset, :hidden')
+        .val('')
+        .prop('checked', false)
+        .prop('selected', false);
 }
