@@ -63,6 +63,14 @@ function costruisciTabella() {
  * Funzione chiamata al 'Salva' del modale, aggiunge un nuovo libro (con i dati inseriti nel form) alla tabella.
  */
 function aggiuntaNuovoLibroAllaTabella() {
+<<<<<<< HEAD
+    let titolo = $("#titolo").val();
+    let autore = $("#autore").val();
+    let isbn = $("#isbn").val();
+    let completato = false;
+    if ($("#completato").is(":checked"))
+        completato = true;
+=======
     let libro = {
         titolo: $("#titolo").val(),
         autore: $("#autore").val(),
@@ -73,6 +81,7 @@ function aggiuntaNuovoLibroAllaTabella() {
     let tbody = document.getElementById("body-tabella");
     let tr = costruisciRiga(libro);
     tbody.appendChild(tr);
+>>>>>>> fbe26a20ec050a7b86f0383ef7586ab20b75b8a0
 
     pulisciForm("#formNuovoLibro");
 }
@@ -92,7 +101,11 @@ function costruisciRiga(libro) {
     let tdCompletato = document.createElement('td');
     let checkbox = document.createElement('input');
     checkbox.setAttribute("type", "checkbox");
+<<<<<<< HEAD
+    checkbox.checked = completato;
+=======
     checkbox.checked = libro.completato;
+>>>>>>> fbe26a20ec050a7b86f0383ef7586ab20b75b8a0
     tdCompletato.appendChild(checkbox);
 
     tr.appendChild(tdTitolo);
