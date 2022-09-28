@@ -13,6 +13,9 @@ const port = 3000;
 app.use(morgan('tiny'));
 app.use(express.json());
 
+app.use(express.static('public'));
+app.get('/', (req, res) => res.redirect('index.html'));
+
 
 app.get('/libri', (req, res) => {
     dao.getTuttiLibri()
