@@ -1,8 +1,9 @@
 import BookManager from './book-manager.js';
 
 class App {
-    constructor(containerLibri) {
+    constructor(containerLibri, grigliaLibri) {
         this.containerLibri = containerLibri;
+        this.grigliaLibri = grigliaLibri;
 
         this.bookManager = new BookManager();
 
@@ -16,10 +17,32 @@ class App {
      * @param {array[libri]} libri i libri salvati sul db.
      */
     mostraLibri(libri) {
-        for (let libro of libri) {
-            let tr = this.costruisciRiga(libro);
-            this.containerLibri.append(tr);
-        }
+        // for (let libro of libri) {
+        //     let tr = this.costruisciRiga(libro);
+        //     this.containerLibri.append(tr);
+        // }
+
+        this.grigliaLibri.kendoGrid({
+            dataSource: libri,
+            filterable: true,
+            sortable: true,
+            columns: [
+                { field: "titolo", title: "Titolo" },
+                { field: "autore", title: "Autore" },
+                { field: "isbn", title: "ISBN" },
+                { template: '<input type="checkbox" #= completato ? \'checked="checked"\' : "" # class="chkbx k-checkbox k-checkbox-md k-rounded-md" />', title: "Completato", width: 110, attributes: {class: "k-text-center"} }
+            ]
+        });
+
+        function dirtyField(data, fieldName){
+            var hasClass = $("[data-uid=" + data.uid + "]").find(".k-dirty-cell").length < 1;
+            if(data.dirty && data.dirtyFields[fieldName] && hasClass){
+              return "<span class='k-dirty'></span>"
+            }
+            else{
+              return "";
+            }
+          }
     }
 
     /**

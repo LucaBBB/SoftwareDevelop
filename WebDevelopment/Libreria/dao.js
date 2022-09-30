@@ -8,7 +8,7 @@ const db = new sqlite.Database('./database.db', (err) => {
 
 exports.getTuttiLibri = function () {
     return new Promise((resolve, reject) => {
-        const query = 'SELECT * FROM libri';
+        const query = 'SELECT * FROM libri ORDER BY autore ASC, titolo ASC';
 
         db.all(query, (err, rows) => {
             if (err) {
