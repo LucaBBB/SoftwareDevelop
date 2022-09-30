@@ -11,13 +11,22 @@ class App {
         });
     }
 
+    /**
+     * Metodo che per ogni libro salvato su db costruisce una row e la appende nella tabella.
+     * @param {array[libri]} libri i libri salvati sul db.
+     */
     mostraLibri(libri) {
         for (let libro of libri) {
             let tr = this.costruisciRiga(libro);
-            this.containerLibri.appendChild(tr);
+            this.containerLibri.append(tr);
         }
     }
 
+    /**
+     * Metodo che per ogni libro salvato nel db costruisce la singola row.
+     * @param {libro} libro uno dei libri salvati sul db.
+     * @returns l'elemento di tipo tr.
+     */
     costruisciRiga(libro) {
         let tr = document.createElement('tr');
 
