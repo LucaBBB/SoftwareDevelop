@@ -14,6 +14,10 @@ class App {
         $("#salva").on('click', this.onFormSubmitted);
     }
 
+    /**
+     * Funzione che viene eseguita nel momento in cui viene premuto il tasto di salvataggio nel modale di aggiunta di un nuovo libro.
+     * @param {*} event 
+     */
     onFormSubmitted = (event) => {
         event.preventDefault();
 
@@ -30,6 +34,10 @@ class App {
         })
     }
 
+    /**
+     * Metodo comune in più parti del codice, quindi estratto per evitare duplicazioni.
+     * Effettua la chiamata al servizio che va a prendere i dati da db e a costruire la griglia.
+     */
     wrapperShowLibri() {
         this.bookManager.getLibri().then(libri => {
             this.mostraLibri(libri);
@@ -106,8 +114,6 @@ class App {
 
         return tr;
     }
-
-
 }
 
 export default App;
