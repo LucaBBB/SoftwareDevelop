@@ -25,6 +25,7 @@ class App {
         );
 
         this.bookManager.addLibro(libro).then(() => {
+            this.grigliaLibri.empty();
             this.wrapperShowLibri();
         })
     }
@@ -32,7 +33,6 @@ class App {
     wrapperShowLibri() {
         this.bookManager.getLibri().then(libri => {
             this.mostraLibri(libri);
-            this.setVariabileLibreria(libri);
         });
     }
 
@@ -41,12 +41,23 @@ class App {
      * @param {array[libri]} libri i libri salvati sul db.
      */
     mostraLibri(libri) {
-        console.log(libri);
-
         this.grigliaLibri.kendoGrid({
-            dataSource: libri,
-            filterable: true,
+            dataSource: {
+                data: libri,
+                pageSize: 10
+            },
+            columnMenu: true,
+            groupable: true,
+            pageable: {
+                alwaysVisible: true,
+                    pageSizes: [10, 20, 100]
+            },
             sortable: true,
+            resizable: true,
+            toolbar: ["excel", "search"],
+            excel: {
+                fileName: `libreria_${this.getData()}.xlsx`
+            },
             columns: [
                 { field: "titolo", title: "Titolo" },
                 { field: "autore", title: "Autore" },
@@ -56,8 +67,13 @@ class App {
         });
     }
 
-    setVariabileLibreria(libri) {
-        this.libreria = libri;
+    /**
+     * Metodo che restituisce la data da applicare al nome del file da esportare.
+     * @returns la concatenazione sotto forma di stringa dell'anno, del mese e del giorno attuali intervallati dal segno 'meno'.
+     */
+    getData() {
+        const data = new Date();
+        return `${data.getFullYear()}-${data.getMonth()}-${data.getDay()}`;
     }
 
     /**

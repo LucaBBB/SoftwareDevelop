@@ -10,8 +10,10 @@
 
     <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2022.2.802/styles/kendo.default-ocean-blue.min.css" />
     <script src="https://kendo.cdn.telerik.com/2022.2.802/js/jquery.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2022.2.802/js/jszip.min.js"></script>
     <script src="https://kendo.cdn.telerik.com/2022.2.802/js/kendo.all.min.js"></script>
     <script src="https://kendo.cdn.telerik.com/2022.2.802/js/messages/kendo.messages.it-IT.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2022.2.802/js/cultures/kendo.culture.it-IT.min.js"></script>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
@@ -30,9 +32,6 @@
                     </svg>
                     Task Manager
                 </a>
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                </form>
                 <a class="navbar-brand" href="#">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-person" viewBox="0 0 16 16">
@@ -60,8 +59,8 @@
 
         <!-- Button trigger modal -->
         <div style="float: right;">
-            <button id="btn-nuovo-libro" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Nuovo libro
+            <button id="btn-nuovo-libro" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <!-- Nuovo libro -->
             </button>
         </div>
 
