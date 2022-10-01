@@ -9,10 +9,7 @@ class App {
 
         this.bookManager = new BookManager();
 
-        this.bookManager.getLibri().then(libri => {
-            this.mostraLibri(libri);
-            this.setVariabileLibreria(libri);
-        });
+        this.wrapperShowLibri();
 
         $("#salva").on('click', this.onFormSubmitted);
     }
@@ -20,14 +17,23 @@ class App {
     onFormSubmitted = (event) => {
         event.preventDefault();
 
-        let libro = new Libro($("#titolo").val(), $("#autore").val(), $("#isbn").val(), $('#completato').is(":checked"));            
+        let libro = new Libro(
+            $("#titolo").val(),
+            $("#autore").val(),
+            $("#isbn").val(),
+            $('#completato').is(":checked")
+        );
 
         this.bookManager.addLibro(libro).then(() => {
-            this.bookManager.getLibri().then(libri => {
-                this.mostraLibri(libri);
-                this.setVariabileLibreria(libri);
-            });
+            this.wrapperShowLibri();
         })
+    }
+
+    wrapperShowLibri() {
+        this.bookManager.getLibri().then(libri => {
+            this.mostraLibri(libri);
+            this.setVariabileLibreria(libri);
+        });
     }
 
     /**
