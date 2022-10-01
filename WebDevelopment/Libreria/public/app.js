@@ -1,15 +1,33 @@
 import BookManager from './book-manager.js';
+import Libro from './libro.js';
 
 class App {
     constructor(containerLibri, grigliaLibri) {
         this.containerLibri = containerLibri;
         this.grigliaLibri = grigliaLibri;
+        this.libreria = [];
 
         this.bookManager = new BookManager();
 
         this.bookManager.getLibri().then(libri => {
             this.mostraLibri(libri);
+            this.setVariabileLibreria(libri);
         });
+
+        $("#salva").on('click', this.onFormSubmitted);
+    }
+
+    onFormSubmitted = (event) => {
+        event.preventDefault();
+
+        let libro = new Libro($("#titolo").val(), $("#autore").val(), $("#isbn").val(), $('#completato').is(":checked"));            
+
+        this.bookManager.addLibro(libro).then(() => {
+            this.bookManager.getLibri().then(libri => {
+                this.mostraLibri(libri);
+                this.setVariabileLibreria(libri);
+            });
+        })
     }
 
     /**
@@ -17,10 +35,7 @@ class App {
      * @param {array[libri]} libri i libri salvati sul db.
      */
     mostraLibri(libri) {
-        // for (let libro of libri) {
-        //     let tr = this.costruisciRiga(libro);
-        //     this.containerLibri.append(tr);
-        // }
+        console.log(libri);
 
         this.grigliaLibri.kendoGrid({
             dataSource: libri,
@@ -30,19 +45,13 @@ class App {
                 { field: "titolo", title: "Titolo" },
                 { field: "autore", title: "Autore" },
                 { field: "isbn", title: "ISBN" },
-                { template: '<input type="checkbox" #= completato ? \'checked="checked"\' : "" # class="chkbx k-checkbox k-checkbox-md k-rounded-md" />', title: "Completato", width: 110, attributes: {class: "k-text-center"} }
+                { template: '<input type="checkbox" #= completato ? \'checked="checked"\' : "" # class="chkbx k-checkbox k-checkbox-md k-rounded-md" />', title: "Completato", width: 110, attributes: { class: "k-text-center" } }
             ]
         });
+    }
 
-        function dirtyField(data, fieldName){
-            var hasClass = $("[data-uid=" + data.uid + "]").find(".k-dirty-cell").length < 1;
-            if(data.dirty && data.dirtyFields[fieldName] && hasClass){
-              return "<span class='k-dirty'></span>"
-            }
-            else{
-              return "";
-            }
-          }
+    setVariabileLibreria(libri) {
+        this.libreria = libri;
     }
 
     /**

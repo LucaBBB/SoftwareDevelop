@@ -27,15 +27,10 @@ app.post('/add', (req, res) => {
     let completato = 0;
     if (req.body.completato) completato = 1;
 
-    const nuovoLibro = {
-        titolo: req.body.titolo,
-        autore: req.body.autore,
-        isbn: req.body.isbn,
-        completato: completato
-    }
+    const libro = req.body;
+    console.log(libro);
 
-    console.log(nuovoLibro);
-    dao.addNuovoLibro(nuovoLibro)
+    dao.addNuovoLibro(libro)
         .then((result) => res.status(201).header('Location', `/libri/${result}`).end())
         .catch((err) => res.status(503).json({ error: `Errore interno al database durante l'aggiunta`}));
 });
