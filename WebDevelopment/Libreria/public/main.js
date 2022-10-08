@@ -23,7 +23,7 @@ const app = new App(containerLibri, grigliaLibri);
  * WORK IN PROGRESS
  * 
  * 1) aggiunta funzionalità di modifica di un libro;
- * 2) aggiunta funzionalità di rimozione di un libro;
+ * 2) aggiunta funzionalità di rimozione di un libro;   <--- COMPLETATO ---|
  * 3) aggiunto login all'applicazione;
  * 4) ampliamento del database (gestione autori)
  * 5) ampliamento campi griglie (data inizio lettura - data fine lettura)

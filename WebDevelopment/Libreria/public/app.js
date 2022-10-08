@@ -33,17 +33,8 @@ class App {
         this.bookManager.addLibro(libro).then(() => {
             this.wrapperShowLibri();
         })
-    }
 
-    /**
-     * Metodo comune in più parti del codice, quindi estratto per evitare duplicazioni.
-     * Effettua la chiamata al servizio che va a prendere i dati da db e a costruire la griglia.
-     */
-    wrapperShowLibri() {
-        this.bookManager.getLibri().then(libri => {
-            this.tbody.empty();
-            this.mostraLibri(libri);
-        });
+        $("#formNuovoLibro")[0].reset();
     }
 
     /**
@@ -105,11 +96,7 @@ class App {
                                 <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
                             </svg>`;
         button.addEventListener('click', () => {
-            this.bookManager.deleteLibro(libro.isbn)
-                .then(() => {
-                    this.wrapperShowLibri();
-                })
-                .catch((err) => console.err(err));
+            this.wrapperDeleteLibro(libro.isbn);
         });
         tdCancel.appendChild(button);
 
@@ -121,6 +108,31 @@ class App {
         tr.appendChild(tdCancel);
 
         return tr;
+    }
+
+    /**
+     * Metodo estratto per comodità.
+     * Effettua la chiamata al servizio che provvede ad eliminare un libro.
+     * 
+     * @param {*} isbn l'isbn del libro che si vuole eliminare.
+     */
+    wrapperDeleteLibro(isbn) {
+        this.bookManager.deleteLibro(isbn)
+            .then(() => {
+                this.wrapperShowLibri();
+            })
+            .catch((err) => console.err(err));
+    }
+
+    /**
+     * Metodo comune in più parti del codice, quindi estratto per evitare duplicazioni.
+     * Effettua la chiamata al servizio che va a prendere i dati da db e a costruire la griglia.
+     */
+     wrapperShowLibri() {
+        this.bookManager.getLibri().then(libri => {
+            this.tbody.empty();
+            this.mostraLibri(libri);
+        });
     }
 }
 
