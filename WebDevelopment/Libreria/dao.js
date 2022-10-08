@@ -34,4 +34,19 @@ exports.addNuovoLibro = function (nuovoLibro) {
             }
         });
     });
+};
+
+exports.deleteLibro = function(isbn) {
+    return new Promise((resolve, reject) => {
+        const sql = 'DELETE FROM Libri WHERE isbn = ?';
+        db.run(sql, [isbn], function(err) {
+            if(err)
+                reject(err);
+            else if (this.changes === 0)
+                resolve({error: 'Course not found.'});
+            else {
+                resolve();
+            }
+        });
+    });
 }

@@ -35,6 +35,19 @@ app.post('/add', (req, res) => {
         .catch((err) => res.status(503).json({ error: `Errore interno al database durante l'aggiunta`}));
 });
 
+app.delete('/delete/:isbn', (req,res) => {
+    dao.deleteLibro(req.params.isbn)
+        .then((result) =>  {
+            if(result)
+                res.status(404).json(result);
+            else
+             res.status(204).end();
+        })
+        .catch((err) => res.status(500).json({
+            errors: [{'param': 'Server', 'msg': err}],
+        }));
+});
+
 
 app.listen(port, () =>
     console.log(`Server is listening at http://localhost:${port}`)
