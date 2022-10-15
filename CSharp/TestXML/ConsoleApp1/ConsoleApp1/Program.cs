@@ -1,8 +1,12 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using System.Xml.Serialization;
 
+string filename = "C:\\Users\\PC-di-Luca\\Desktop\\SoftwareDevelop\\CSharp\\TestXML\\ConsoleApp1\\ConsoleApp1\\XMLFile1.xml";
 
-
+XmlSerializer serializer = new XmlSerializer(typeof(root));
+using (Stream reader = new FileStream(filename, FileMode.Open))
+{
+    root r = (root)serializer.Deserialize(reader);
+}
 
 
 // NOTA: con il codice generato potrebbe essere richiesto almeno .NET Framework 4.5 o .NET Core/Standard 2.0.
