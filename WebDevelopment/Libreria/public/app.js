@@ -3,6 +3,11 @@ import Libro from './libro.js';
 
 class App {
     constructor(containerLibri, grigliaLibri) {
+        $("#tabella").kendoGrid({
+            height: 550,
+            groupable: true,
+            sortable: true
+        });
         this.containerLibri = containerLibri;
         this.grigliaLibri = grigliaLibri;
         this.libreria = [];
@@ -14,6 +19,7 @@ class App {
         this.wrapperShowLibri();
 
         $("#salva").on('click', this.onFormSubmitted);
+        $("#aggiorna").on('click', this.onFormSubmittedUpd);
     }
 
     /**
@@ -37,6 +43,17 @@ class App {
         $("#formNuovoLibro")[0].reset();
     }
 
+    onFormSubmittedUpd = (event) => {
+        event.preventDefault();
+
+        let libro = new Libro(
+            $("#titolo").val(),
+            $("#autore").val(),
+            $("#isbn").val(),
+            $('#completato').is(":checked")
+        );
+    }
+
     /**
      * Metodo che per ogni libro salvato su db costruisce una row e la appende nella tabella.
      * @param {array[libri]} libri i libri salvati sul db.
@@ -49,6 +66,8 @@ class App {
             tbody.appendChild(tr);
             index++;
         }
+
+        
     }
 
     /**
@@ -91,27 +110,22 @@ class App {
         checkbox.checked = libro.completato;
         tdCompletato.appendChild(checkbox);
 
-
-        let tdUpdate = document.createElement('td');
+        let tdEdit = document.createElement('td');
+        tdEdit.setAttribute('class', 'edit-buttons')
+        //let tdUpdate = document.createElement('td');
         var buttonUpdate = document.createElement("button");
         buttonUpdate.setAttribute('class', 'btn btn-outline-success cancelRow');
         let iUpdate = document.createElement('i');
         iUpdate.setAttribute('class', 'bi bi-pencil');
+        buttonUpdate.setAttribute('data-bs-toggle', 'modal');
+        buttonUpdate.setAttribute('data-bs-target', '#updateModal');
         buttonUpdate.appendChild(iUpdate);
         
         buttonUpdate.addEventListener('click', () => {
-            this.wrapperDeleteLibro(libro.isbn);
+            this.wrapperUpdateLibro(libro);
         });
-        tdUpdate.appendChild(buttonUpdate);
 
 
-        // buttonUpdate.setAttribute('type', 'button');
-        // buttonUpdate.setAttribute('data-toggle', 'tooltip');
-        // buttonUpdate.setAttribute('data-placement', 'top');
-        // buttonUpdate.setAttribute('title', 'Modifica libro');
-        
-
-        let tdCancel = document.createElement('td');
         var buttonCancel = document.createElement("button");
         buttonCancel.setAttribute('class', 'btn btn-outline-danger cancelRow');
         let iCancel = document.createElement('i');
@@ -120,23 +134,16 @@ class App {
         buttonCancel.addEventListener('click', () => {
             this.wrapperDeleteLibro(libro.isbn);
         });
-        tdCancel.appendChild(buttonCancel);
-        
 
-
-        // button.setAttribute('type', 'button');
-        // button.setAttribute('data-toggle', 'tooltip');
-        // button.setAttribute('data-placement', 'top');
-        // button.setAttribute('title', 'Elimina libro');
-       
+        tdEdit.appendChild(buttonUpdate);
+        tdEdit.appendChild(buttonCancel);       
 
 
         tr.appendChild(tdTitolo);
         tr.appendChild(tdAutore);
         tr.appendChild(tdIsbn);
         tr.appendChild(tdCompletato);
-        tr.appendChild(tdUpdate);
-        tr.appendChild(tdCancel);
+        tr.appendChild(tdEdit);
 
         return tr;
     }
@@ -153,6 +160,10 @@ class App {
                 this.wrapperShowLibri();
             })
             .catch((err) => console.err(err));
+    }
+
+    wrapperUpdateLibro(vecchioLibro) {
+        
     }
 
     /**

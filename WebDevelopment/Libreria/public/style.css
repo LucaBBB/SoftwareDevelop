@@ -1,9 +1,12 @@
 #btn-nuovo-libro {
-    margin-top: 10%;
     width: 40px;
     height: 40px;
 }
 
 .td {
     vertical-align: middle;
+}
+
+.edit-buttons {
+    text-align: center;
 }

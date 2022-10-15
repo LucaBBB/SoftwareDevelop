@@ -54,29 +54,25 @@
         <h1>Tabella dei libri</h1>
         <p>In questa tabella sono presenti tutti i libri da me posseduti.</p>
 
-        <table class="table">
+        <table id="tabella" class="table">
             <thead id="table-head">
                 <tr>
                     <th>Titolo</th>
                     <th>Autore</th>
                     <th>ISBN</th>
                     <th>Completato</th>
-                    <th></th>
-                    <th></th>
+                    <th class="edit-buttons">Edit</th>
                 </tr>
             </thead>
             <tbody id="table-body">
 
             </tbody>
         </table>
-        <!-- <div id="griglia-libri">
-
-        </div> -->
 
         <!-- Button trigger modal -->
         <div style="float: right;">
-            <button id="btn-nuovo-libro" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                <!-- Nuovo libro -->
+            <button id="btn-nuovo-libro" class='btn btn-outline-primary' type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <i class="bi bi-plus"></i>
             </button>
         </div>
 
@@ -124,23 +120,44 @@
             </div>
         </div>
 
-        <!-- Modal per cancellazione libro -->
-        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
+        <!-- Modale per l'aggiornamento di un libro-->
+        <div class="modal fade" id="updateModal" data-bs-backdrop="static" tabindex="-1"
+            aria-labelledby="updateModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
                 <div class="modal-content">
+                    <!-- HEADER DEL MODALE-->
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                        <h5 class="modal-title" id="updateModalLabel">Form di modifica di un libro</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
+                    <!-- FINE HEADER DEL MODALE-->
+
+                    <!-- BODY DEL MODALE-->
                     <div class="modal-body">
-                        ...
+                        <form id="formNuovoLibro">
+                            <div class="mb-3">
+                                <label for="titolo" class="form-label">Titolo</label>
+                                <input type="text" class="form-control" id="titolo-upd" aria-describedby="titoloHelp">
+                            </div>
+                            <div class="mb-3">
+                                <label for="autore" class="form-label">Autore</label>
+                                <input type="text" class="form-control" id="autore-upd" aria-describedby="autoreHelp">
+                            </div>
+                            <div class="mb-3">
+                                <label for="isbn" class="form-label">ISBN</label>
+                                <input type="text" class="form-control" id="isbn-upd" aria-describedby="isbnHelp">
+                            </div>
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="completato">
+                                <label class="form-check-label" for="completato-upd">Completato</label>
+                            </div>
+                        </form>
                     </div>
+                    <!-- FINE BODY DEL MODALE-->
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" id="deleteModalYes" class="btn btn-primary">Save changes</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+                        <button id="aggiorna" type="button" class="btn btn-primary" data-bs-dismiss="modal">Aggiorna
+                            libro</button>
                     </div>
                 </div>
             </div>

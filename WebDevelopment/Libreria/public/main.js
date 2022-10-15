@@ -3,16 +3,6 @@
 import App from './app.js';
 
 
-$("#btn-nuovo-libro").kendoButton({
-    themeColor: "primary",
-    icon: "plus"
-});
-$("#btn-nuovo-libro").kendoTooltip({
-    content: "Nuovo libro"
-})
-
-
-
 const containerLibri = $("#body-tabella");
 const grigliaLibri = $("#griglia-libri");
 
