@@ -3,11 +3,11 @@ import Libro from './libro.js';
 
 class App {
     constructor(containerLibri, grigliaLibri) {
-        $("#tabella").kendoGrid({
-            height: 550,
-            groupable: true,
-            sortable: true
-        });
+        // $("#tabella").kendoGrid({
+        //     height: 550,
+        //     groupable: true,
+        //     sortable: true
+        // });
         this.containerLibri = containerLibri;
         this.grigliaLibri = grigliaLibri;
         this.libreria = [];
@@ -29,18 +29,24 @@ class App {
     onFormSubmitted = (event) => {
         event.preventDefault();
 
-        let libro = new Libro(
-            $("#titolo").val(),
-            $("#autore").val(),
-            $("#isbn").val(),
-            $('#completato').is(":checked")
-        );
+        if ($("#isbn").val()) {
+            let libro = new Libro(
+                $("#titolo").val(),
+                $("#autore").val(),
+                $("#isbn").val(),
+                $('#completato').is(":checked")
+            );
 
-        this.bookManager.addLibro(libro).then(() => {
-            this.wrapperShowLibri();
-        })
+            this.bookManager.addLibro(libro).then(() => {
+                this.wrapperShowLibri();
+            })
 
-        $("#formNuovoLibro")[0].reset();
+            $("#formNuovoLibro")[0].reset();
+        }
+        else {
+            alert("Libro non aggiunto, completare tutti i campi!");
+            $("#exampleModal").show();
+        }
     }
 
     onFormSubmittedUpd = (event) => {
@@ -67,7 +73,7 @@ class App {
             index++;
         }
 
-        
+
     }
 
     /**
@@ -120,7 +126,7 @@ class App {
         buttonUpdate.setAttribute('data-bs-toggle', 'modal');
         buttonUpdate.setAttribute('data-bs-target', '#updateModal');
         buttonUpdate.appendChild(iUpdate);
-        
+
         buttonUpdate.addEventListener('click', () => {
             this.wrapperUpdateLibro(libro);
         });
@@ -136,7 +142,7 @@ class App {
         });
 
         tdEdit.appendChild(buttonUpdate);
-        tdEdit.appendChild(buttonCancel);       
+        tdEdit.appendChild(buttonCancel);
 
 
         tr.appendChild(tdTitolo);
@@ -163,7 +169,7 @@ class App {
     }
 
     wrapperUpdateLibro(vecchioLibro) {
-        
+
     }
 
     /**
