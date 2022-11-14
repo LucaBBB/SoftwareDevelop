@@ -20,7 +20,7 @@ class Libro:
 # 4) Ricerca per un qualche criterio.
 
 # Zona variabili
-filepath = "C:\\Users\\PC-di-Luca\\Desktop\\SoftwareDevelop\\Python\\Libreria\\dataset.json"
+filepath = ".\\dataset.json"
 libreria = []
 
 
@@ -68,6 +68,24 @@ def aggiungi_libro():
     print("----------------------------")
     
 
+def rimuovi_libro():
+    print("--- Rimozione di un libro ---")
+
+    isbn = input("Inserire l'isbn: ")
+    copie = int(input("Inserire il numero di copie: "))
+
+    indice_libro = get_indice_libro_by_isbn(isbn)
+
+    if indice_libro == -1:
+        print(f'Il libro con isbn {isbn} non è presente in libreria.')
+    else:
+        if libreria[indice_libro].copie == 1 or (libreria[indice_libro].copie - copie <= 0):
+            libreria.pop(indice_libro)
+        else:
+            libreria[indice_libro].copie -= copie
+
+    print("----------------------------")
+
 # Funzione che stampa le informazioni di tutti i libri (se posseduti), altrimenti un messaggio di errore.
 def visualizza_libri():
     print("--- Visualizzazione di tutti i libri posseduti ---")
@@ -92,6 +110,8 @@ def main():
             visualizza_libri()
         elif scelta_utente == 2:
             aggiungi_libro()
+        elif scelta_utente == 3:
+            rimuovi_libro()
         scelta_utente = int(input("[0] per terminare, [1] per visualizzare i libri posseduti, [2] per aggiungere un nuovo libro: "))
     if scelta_utente == 0:
         print("Arrivederci, alla prossima!")
