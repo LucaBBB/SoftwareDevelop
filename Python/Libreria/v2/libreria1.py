@@ -3,17 +3,6 @@ from mysql.connector import cursor
 
 from libro import Libro
 
-# class Libro:
-#     def __init__(self, isbn, titolo, autore, anno, copie):
-#         self.isbn = isbn
-#         self.titolo = titolo
-#         self.autore = autore
-#         self.anno = anno
-#         self.copie = copie
-
-#     def __str__(self):
-#         return f'{self.titolo}, {self.autore}, {self.anno}, {self.isbn}, {self.copie}'
-
 
 db = mysql.connector.connect(
     host = "localhost",
@@ -26,7 +15,7 @@ cursor = db.cursor()
 libreria = []
 
 # Definizione delle query utili.
-query_insert = "INSERT INTO libri (isbn, titolo, autore, anno, copie) VALUES (%s, %s, %s, %s, %s)"
+query_insert = "INSERT INTO libri (isbn, titolo, autore, anno, copie, editore) VALUES (%s, %s, %s, %s, %s, %s)"
 query_update_copie = "update libri set copie = copie + %s where isbn = %s"
 query_select_all = "SELECT * FROM libri ORDER BY autore ASC, anno ASC"
 query_reset_tabella = "DELETE FROM libri"
@@ -36,14 +25,13 @@ def inizializza_libreria():
     cursor.execute(query_select_all)
     result = cursor.fetchall()
     for row in result:
-        libro = Libro(row[0], row[1], row[2], row[3], row[4])
-        libreria.append(libro)
+        libreria.append(Libro(row[0], row[1], row[2], row[3], row[4], row[5]))
 
 
 def salva_libreria():
     cursor.execute(query_reset_tabella)
     for libro in libreria:
-        cursor.execute(query_insert, (libro.isbn, libro.titolo, libro.autore, libro.anno, libro.copie))
+        cursor.execute(query_insert, (libro.isbn, libro.titolo, libro.autore, libro.anno, libro.copie, libro.editore))
         db.commit()
         #print(f'{cursor.rowcount} record inseriti')
 
@@ -67,11 +55,12 @@ def aggiungi_libro():
     autore = input("Inserire l'autore: ")
     anno = int(input("Inserire l'anno: "))
     copie = int(input("Inserire il numero di copie: "))
+    editore = input("Inserire l'editore: ")
 
     indice_libro = get_indice_libro_by_isbn(isbn)
 
     if indice_libro == -1:
-        libreria.append(Libro(isbn, titolo, autore, anno, copie))
+        libreria.append(Libro(isbn, titolo, autore, anno, copie, editore))
         print("Il nuovo libro è stato aggiunto nella libreria.")
     else:
         libreria[indice_libro].copie += copie
@@ -105,19 +94,28 @@ def rimuovi_libro():
 def modifica_libro():
     isbn = input("Inserire il codice isbn del libro da modificare: ")
     index = get_indice_libro_by_isbn(isbn)
+
     if index == -1:
         print(f'Nessun libro con isbn {isbn} posseduto.')
     else:
         print(f'> Isbn: {libreria[index].isbn}')
         isbn_nuovo = input("Inserire l'isbn, invio per non modificare il campo: ")
+        
         print(f'> Titolo: {libreria[index].titolo}')
         titolo_nuovo = input("Inserire il titolo, invio per non modificare il campo: ")
+
         print(f'> Autore: {libreria[index].autore}')
         autore_nuovo = input("Inserire l'autore, invio per non modificare il campo: ")
+
         print(f'> Anno: {libreria[index].anno}')
         anno_nuovo = input("Inserire l'anno, invio per non modificare il campo: ")
+        
         print(f'> Numero copie: {libreria[index].copie}')
         copie_nuovo = input("Inserire il numero di copie, invio per non modificare il campo: ")
+
+        print(f'> Editore: {libreria[index].editore}')
+        editore_nuovo = input("Inserire l'editore, invio per non modificare il campo: ")
+
 
         if (isbn_nuovo != ""):
             libreria[index].isbn = isbn_nuovo
@@ -129,6 +127,8 @@ def modifica_libro():
             libreria[index].anno = int(anno_nuovo)
         if (copie_nuovo != ""):
             libreria[index].copie = int(copie_nuovo)
+        if (editore_nuovo != ""):
+            libreria[index].editore = editore_nuovo
 
         print(f'Info libro modificato: {libreria[index]}')
 
@@ -136,12 +136,12 @@ def modifica_libro():
 
 
 def info_libro_isbn():
-    isbn = print("Inserire l'isbn del libro da cercare: ")
+    isbn = input("> Inserire l'isbn del libro da cercare: ")
     index = get_indice_libro_by_isbn(isbn)
     if index == -1:
-        print(f'Nessun libro con isbn {isbn} posseduto.')
+        print(f'\n>> Nessun libro con isbn {isbn} posseduto.\n')
     else:
-        print(f'Trovato libro: {libreria[index]}')
+        print(f'\n>> Trovato libro: {libreria[index]}\n')
 
 
 
@@ -162,7 +162,7 @@ def visualizza_libri():
 
 
 def menu():
-    print("[0] per terminare, [1] per visualizzare i libri posseduti, [2] per aggiungere un nuovo libro, [3] per rimuovere un libro, [4] per cercare un libro per ISBN, [5] per modificare un libro: ")
+    print("> Inserire:\n[0] per terminare,\n[1] per visualizzare i libri posseduti,\n[2] per aggiungere un nuovo libro,\n[3] per rimuovere un libro,\n[4] per cercare un libro per ISBN,\n[5] per modificare un libro: ")
 
 
 
@@ -188,7 +188,7 @@ def main():
         scelta_utente = int(input())
 
     if scelta_utente == 0:
-        print("Arrivederci, alla prossima!")
+        print("\n>> Arrivederci, alla prossima!\n")
         salva_libreria()
 
 
@@ -197,4 +197,4 @@ try:
     main()
     print("")
 except:
-    print("Arrivederci, alla prossima!")
+    print("\n>> Arrivederci, alla prossima!\n")
