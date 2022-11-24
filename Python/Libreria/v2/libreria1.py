@@ -21,6 +21,8 @@ query_select_all = "SELECT * FROM libri ORDER BY autore ASC, anno ASC"
 query_reset_tabella = "DELETE FROM libri"
 
 
+# Funzione che effettua una query "select all" sul database per ottenere i dati dei libri, 
+# serializzarli in un'istanza della classe Libro ed inserirlo nella lista libreria
 def inizializza_libreria():
     cursor.execute(query_select_all)
     result = cursor.fetchall()
@@ -28,22 +30,20 @@ def inizializza_libreria():
         libreria.append(Libro(row[0], row[1], row[2], row[3], row[4], row[5]))
 
 
+# Funzione che elimina il contenuto della tabella "libri" e salva il contenuto della lista libreria nel database.
 def salva_libreria():
     cursor.execute(query_reset_tabella)
     for libro in libreria:
         cursor.execute(query_insert, (libro.isbn, libro.titolo, libro.autore, libro.anno, libro.copie, libro.editore))
         db.commit()
-        #print(f'{cursor.rowcount} record inseriti')
-
 
 
 # Funzione di supporto che estrapola la posizione nella lista del libro con l'isbn coincidente con quello passato come parametro, -1 se non trovato.
 def get_indice_libro_by_isbn(isbn):
-    for i in range(0, len(libreria)):
-        if libreria[i].isbn == isbn:
-            return i
+    for libro in libreria:
+        if libro.isbn == isbn:
+            return libreria.index(libro)
     return -1
-# ------------------------------------
 
 
 
@@ -164,32 +164,37 @@ def visualizza_libri():
 def menu():
     print("> Inserire:\n[0] per terminare,\n[1] per visualizzare i libri posseduti,\n[2] per aggiungere un nuovo libro,\n[3] per rimuovere un libro,\n[4] per cercare un libro per ISBN,\n[5] per modificare un libro: ")
 
+def exit_point():
+    print("\n>> Arrivederci, alla prossima!\n")
+    salva_libreria()
 
 
 def main():
     inizializza_libreria()
 
     menu()
-    scelta_utente = int(input())
+    scelta_utente = int(input("> "))
 
-    while scelta_utente != 0:
-        if scelta_utente == 1:
-            visualizza_libri()
-        elif scelta_utente == 2:
-            aggiungi_libro()
-        elif scelta_utente == 3:
-            rimuovi_libro()
-        elif scelta_utente == 4:
-            info_libro_isbn()
-        elif scelta_utente == 5:
-            modifica_libro()
-            
+    while True:
+        match scelta_utente:
+            case 0:
+                exit_point()
+                break
+            case 1:
+                visualizza_libri()
+            case 2:
+                aggiungi_libro()
+            case 3:
+                rimuovi_libro()
+            case 4:
+                info_libro_isbn()
+            case 5:
+                modifica_libro()
+            case _:
+                print(f'\n>> Nessuna azione disponibile per la scelta {scelta_utente}\n')
         menu()
         scelta_utente = int(input())
-
-    if scelta_utente == 0:
-        print("\n>> Arrivederci, alla prossima!\n")
-        salva_libreria()
+        
 
 
 try:
