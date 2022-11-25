@@ -15,16 +15,19 @@ cursor = db.cursor()
 libreria = []
 
 # Definizione delle query utili.
-query_insert = "INSERT INTO libri (isbn, titolo, autore, anno, copie, editore) VALUES (%s, %s, %s, %s, %s, %s)"
-query_update_copie = "update libri set copie = copie + %s where isbn = %s"
-query_select_all = "SELECT * FROM libri ORDER BY autore ASC, anno ASC"
-query_reset_tabella = "DELETE FROM libri"
+queries = {
+  "query_insert": "INSERT INTO libri (isbn, titolo, autore, anno, copie, editore) VALUES (%s, %s, %s, %s, %s, %s)",
+  "query_select_all": "SELECT * FROM libri ORDER BY autore ASC, anno ASC",
+  "query_reset_tabella": "DELETE FROM libri"
+}
+
+menu_principale = "> Inserire:\n[0] per terminare,\n[1] per visualizzare i libri posseduti,\n[2] per aggiungere un nuovo libro,\n[3] per rimuovere un libro,\n[4] per cercare un libro per ISBN,\n[5] per modificare un libro: "
 
 
 # Funzione che effettua una query "select all" sul database per ottenere i dati dei libri, 
 # serializzarli in un'istanza della classe Libro ed inserirlo nella lista libreria
 def inizializza_libreria():
-    cursor.execute(query_select_all)
+    cursor.execute(queries.get("query_select_all"))
     result = cursor.fetchall()
     for row in result:
         libreria.append(Libro(row[0], row[1], row[2], row[3], row[4], row[5]))
@@ -32,9 +35,9 @@ def inizializza_libreria():
 
 # Funzione che elimina il contenuto della tabella "libri" e salva il contenuto della lista libreria nel database.
 def salva_libreria():
-    cursor.execute(query_reset_tabella)
+    cursor.execute(queries.get("query_reset_tabella"))
     for libro in libreria:
-        cursor.execute(query_insert, (libro.isbn, libro.titolo, libro.autore, libro.anno, libro.copie, libro.editore))
+        cursor.execute(queries.get("query_insert"), (libro.isbn, libro.titolo, libro.autore, libro.anno, libro.copie, libro.editore))
         db.commit()
 
 
@@ -133,8 +136,6 @@ def modifica_libro():
         print(f'Info libro modificato: {libreria[index]}')
 
 
-
-
 def info_libro_isbn():
     isbn = input("> Inserire l'isbn del libro da cercare: ")
     index = get_indice_libro_by_isbn(isbn)
@@ -160,10 +161,6 @@ def visualizza_libri():
     print("--------------------------------------------------")
 
 
-
-def menu():
-    print("> Inserire:\n[0] per terminare,\n[1] per visualizzare i libri posseduti,\n[2] per aggiungere un nuovo libro,\n[3] per rimuovere un libro,\n[4] per cercare un libro per ISBN,\n[5] per modificare un libro: ")
-
 def exit_point():
     print("\n>> Arrivederci, alla prossima!\n")
     salva_libreria()
@@ -172,7 +169,7 @@ def exit_point():
 def main():
     inizializza_libreria()
 
-    menu()
+    print(menu_principale)
     scelta_utente = int(input("> "))
 
     while True:
@@ -192,7 +189,7 @@ def main():
                 modifica_libro()
             case _:
                 print(f'\n>> Nessuna azione disponibile per la scelta {scelta_utente}\n')
-        menu()
+        print(menu_principale)
         scelta_utente = int(input())
         
 
