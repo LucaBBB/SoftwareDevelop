@@ -21,7 +21,8 @@ queries = {
   "query_reset_tabella": "DELETE FROM libri"
 }
 
-menu_principale = "> Inserire:\n[0] per terminare,\n[1] per visualizzare i libri posseduti,\n[2] per aggiungere un nuovo libro,\n[3] per rimuovere un libro,\n[4] per cercare un libro per ISBN,\n[5] per modificare un libro: "
+menu_principale = "> Inserire:\n[0] per terminare,\n[1] per visualizzare i libri posseduti,\n[2] per aggiungere un nuovo libro,\n[3] per rimuovere un libro,\n[4] per cercare un libro per parametro,\n[5] per modificare un libro: "
+menu_info_libro = "> Inserire:\n[0] per tornare al menu principale,\n[1] ricerca per ISBN,\n[2] ricerca per titolo,\n[3] ricerca per autore: "
 
 
 # Funzione che effettua una query "select all" sul database per ottenere i dati dei libri, 
@@ -45,6 +46,19 @@ def salva_libreria():
 def get_indice_libro_by_isbn(isbn):
     for libro in libreria:
         if libro.isbn == isbn:
+            return libreria.index(libro)
+    return -1
+
+def get_indice_libro_by_titolo(titolo):
+    for libro in libreria:
+        if libro.titolo == titolo:
+            return libreria.index(libro)
+    return -1
+
+
+def get_indice_libro_by_autore(autore):
+    for libro in libreria:
+        if libro.autore == autore:
             return libreria.index(libro)
     return -1
 
@@ -135,12 +149,48 @@ def modifica_libro():
 
         print(f'Info libro modificato: {libreria[index]}')
 
+def info_libro():
+    print(menu_info_libro)
+    scelta_utente_info = int(input("> "))
+
+    while True:
+        match scelta_utente_info:
+            case 0:
+                return
+            case 1:
+                info_libro_isbn()
+            case 2:
+                info_libro_titolo()
+            case 3: 
+                info_libro_autore()
+        print(menu_info_libro)
+        scelta_utente_info = int(input("> "))
+
+
 
 def info_libro_isbn():
     isbn = input("> Inserire l'isbn del libro da cercare: ")
     index = get_indice_libro_by_isbn(isbn)
     if index == -1:
         print(f'\n>> Nessun libro con isbn {isbn} posseduto.\n')
+    else:
+        print(f'\n>> Trovato libro: {libreria[index]}\n')
+
+
+def info_libro_titolo():
+    titolo = input("> Inserire il titolo del libro da cercare: ")
+    index = get_indice_libro_by_titolo(titolo)
+    if index == -1:
+        print(f'\n>> Nessun libro con titolo {titolo} posseduto.\n')
+    else:
+        print(f'\n>> Trovato libro: {libreria[index]}\n')
+
+
+def info_libro_autore():
+    autore = input("> Inserire l'autore del libro da cercare: ")
+    index = get_indice_libro_by_autore(autore)
+    if index == -1:
+        print(f'\n>> Nessun libro con autore {autore} posseduto.\n')
     else:
         print(f'\n>> Trovato libro: {libreria[index]}\n')
 
@@ -184,7 +234,7 @@ def main():
             case 3:
                 rimuovi_libro()
             case 4:
-                info_libro_isbn()
+                info_libro()
             case 5:
                 modifica_libro()
             case _:
