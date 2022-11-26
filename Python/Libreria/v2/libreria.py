@@ -43,25 +43,6 @@ def salva_libreria():
 
 
 # Funzione di supporto che estrapola la posizione nella lista del libro con l'isbn coincidente con quello passato come parametro, -1 se non trovato.
-def get_indice_libro_by_isbn(isbn):
-    for libro in libreria:
-        if libro.isbn == isbn:
-            return libreria.index(libro)
-    return -1
-
-def get_indice_libro_by_titolo(titolo):
-    for libro in libreria:
-        if libro.titolo == titolo:
-            return libreria.index(libro)
-    return -1
-
-
-def get_indice_libro_by_autore(autore):
-    for libro in libreria:
-        if libro.autore == autore:
-            return libreria.index(libro)
-    return -1
-
 def get_indici(chiave, valore):
     index_list = []
 
@@ -158,6 +139,7 @@ def modifica_libro():
 
         print(f'Info libro modificato: {libreria[index]}')
 
+
 def info_libro():
     print(menu_info_libro)
     scelta_utente_info = int(input("> "))
@@ -175,25 +157,29 @@ def info_libro():
         print(menu_info_libro)
         scelta_utente_info = int(input("> "))
 
-
-
 def info_libro_isbn():
     isbn = input("> Inserire l'isbn del libro da cercare: ")
-    index = get_indice_libro_by_isbn(isbn)
-    if index == -1:
-        print(f'\n>> Nessun libro con isbn {isbn} posseduto.\n')
-    else:
-        print(f'\n>> Trovato libro: {libreria[index]}\n')
+    index = get_indici("isbn", isbn)
 
+    print("\n")
+    if index == -1:
+        print(f'>> Nessun libro con isbn {isbn} posseduto.')
+    else:
+        for i in index:
+            print(f'>> Trovato libro: {libreria[i]}')
+    print("\n")
 
 def info_libro_titolo():
     titolo = input("> Inserire il titolo del libro da cercare: ")
-    index = get_indice_libro_by_titolo(titolo)
-    if index == -1:
-        print(f'\n>> Nessun libro con titolo {titolo} posseduto.\n')
-    else:
-        print(f'\n>> Trovato libro: {libreria[index]}\n')
+    index = get_indici("titolo", titolo)
 
+    print("\n")
+    if index == -1:
+        print(f'>> Nessun libro con titolo {titolo} posseduto.')
+    else:
+        for i in index:
+            print(f'>> Trovato libro: {libreria[i]}')
+    print("\n")
 
 def info_libro_autore():
     autore = input("> Inserire l'autore del libro da cercare: ")
