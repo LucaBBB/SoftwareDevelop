@@ -64,7 +64,7 @@ def aggiungi_libro():
     copie = int(input("Inserire il numero di copie: "))
     editore = input("Inserire l'editore: ")
 
-    indice_libro = get_indice_libro_by_isbn(isbn)
+    indice_libro = get_indici("isbn", isbn)
 
     if indice_libro == -1:
         libreria.append(Libro(isbn, titolo, autore, anno, copie, editore))
@@ -83,7 +83,7 @@ def rimuovi_libro():
     isbn = input("Inserire l'isbn: ")
     copie = int(input("Inserire il numero di copie: "))
 
-    indice_libro = get_indice_libro_by_isbn(isbn)
+    indice_libro = get_indici("isbn", isbn)
 
     if indice_libro == -1:
         print(f'Il libro con isbn {isbn} non è presente in libreria.')
@@ -100,7 +100,7 @@ def rimuovi_libro():
 
 def modifica_libro():
     isbn = input("Inserire il codice isbn del libro da modificare: ")
-    index = get_indice_libro_by_isbn(isbn)
+    index = get_indici("isbn", isbn)
 
     if index == -1:
         print(f'Nessun libro con isbn {isbn} posseduto.')
