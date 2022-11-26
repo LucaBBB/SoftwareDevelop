@@ -62,7 +62,16 @@ def get_indice_libro_by_autore(autore):
             return libreria.index(libro)
     return -1
 
+def get_indici(chiave, valore):
+    index_list = []
 
+    for libro in libreria:
+        if getattr(libro, chiave) == valore:
+            index_list.append(libreria.index(libro))
+            
+    if len(index_list) > 0:
+        return index_list
+    return -1
 
 def aggiungi_libro():
     print("--- Aggiunta di un libro ---")
@@ -188,11 +197,16 @@ def info_libro_titolo():
 
 def info_libro_autore():
     autore = input("> Inserire l'autore del libro da cercare: ")
-    index = get_indice_libro_by_autore(autore)
+    print(autore)
+    index = get_indici("autore", autore)
+
+    print("\n")
     if index == -1:
-        print(f'\n>> Nessun libro con autore {autore} posseduto.\n')
+        print(f'>> Nessun libro con autore {autore} posseduto.')
     else:
-        print(f'\n>> Trovato libro: {libreria[index]}\n')
+        for i in index:
+            print(f'>> Trovato libro: {libreria[i]}')
+    print("\n")
 
 
 
