@@ -22,7 +22,7 @@ queries = {
 }
 
 menu_principale = "> Inserire:\n[0] per terminare,\n[1] per visualizzare i libri posseduti,\n[2] per aggiungere un nuovo libro,\n[3] per rimuovere un libro,\n[4] per cercare un libro per parametro,\n[5] per modificare un libro: "
-menu_info_libro = "> Inserire:\n[0] per tornare al menu principale,\n[1] ricerca per ISBN,\n[2] ricerca per titolo,\n[3] ricerca per autore: "
+menu_info_libro = "> Inserire:\n[0] per tornare al menu principale,\n[1] ricerca per ISBN,\n[2] ricerca per titolo,\n[3] ricerca per autore,\n[4] ricerca per anno,\n[5] ricerca per editore: "
 
 
 # Funzione che effettua una query "select all" sul database per ottenere i dati dei libri, 
@@ -154,6 +154,10 @@ def info_libro():
                 info_libro_titolo()
             case 3: 
                 info_libro_autore()
+            case 4: 
+                info_libro_anno()
+            case 5: 
+                info_libro_editore()
         print(menu_info_libro)
         scelta_utente_info = int(input("> "))
 
@@ -183,12 +187,35 @@ def info_libro_titolo():
 
 def info_libro_autore():
     autore = input("> Inserire l'autore del libro da cercare: ")
-    print(autore)
     index = get_indici("autore", autore)
 
     print("\n")
     if index == -1:
         print(f'>> Nessun libro con autore {autore} posseduto.')
+    else:
+        for i in index:
+            print(f'>> Trovato libro: {libreria[i]}')
+    print("\n")
+
+def info_libro_anno():
+    anno = input("> Inserire l'anno del libro da cercare: ")
+    index = get_indici("anno", int(anno))
+
+    print("\n")
+    if index == -1:
+        print(f'>> Nessun libro dell\'anno {anno} posseduto.')
+    else:
+        for i in index:
+            print(f'>> Trovato libro: {libreria[i]}')
+    print("\n")
+
+def info_libro_editore():
+    editore = input("> Inserire l'editore del libro da cercare: ")
+    index = get_indici("editore", editore)
+
+    print("\n")
+    if index == -1:
+        print(f'>> Nessun libro dell\'editore {editore} posseduto.')
     else:
         for i in index:
             print(f'>> Trovato libro: {libreria[i]}')
